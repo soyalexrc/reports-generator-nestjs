@@ -8,7 +8,7 @@ services:
       - POSTGRES_PASSWORD=123456
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
   pgAdmin:
     depends_on:
@@ -21,4 +21,17 @@ services:
     environment:
       - PGADMIN_DEFAULT_PASSWORD=123456
       - PGADMIN_DEFAULT_EMAIL=pgadmin@test.com
+    restart: always
+
+  nest-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-app
+    environment:
+      - DATABASE_URL=postgresql://postgres:123456@db:5432/postgres
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
     restart: always
