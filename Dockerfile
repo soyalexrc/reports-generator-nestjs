@@ -17,4 +17,5 @@ FROM node:18-alpine
 WORKDIR /app
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/assets ./src/assets
 CMD ["node", "dist/main"]
